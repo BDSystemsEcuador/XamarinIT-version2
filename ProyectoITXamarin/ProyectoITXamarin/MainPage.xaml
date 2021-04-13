@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ProyectoITXamarin"
+             xmlns:dxn="http://schemas.devexpress.com/xamarin/2014/forms/navigation"
+             xmlns:dxg="http://schemas.devexpress.com/xamarin/2014/forms/datagrid"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             xmlns:dxc="http://schemas.devexpress.com/xamarin/2014/forms/charts"
+             xmlns:vm="clr-namespace:ProyectoITXamarin.DataModel"
+             x:Class="ProyectoITXamarin.MainPage">
+    <ContentPage.BindingContext>
+        <local:ViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <Color x:Key="lightText">#B8B8B8</Color>
+        <Color x:Key="blue600">#FFFFFF</Color>
+    </ContentPage.Resources>
+    <dxn:TabView HeaderPanelPosition="Bottom"
+             ItemHeaderWidth="*"
+             IsSelectedItemIndicatorVisible="True"
+             ItemHeaderTextColor="{StaticResource lightText}"
+             ItemHeaderIconColor="{StaticResource lightText}"
+             HeaderPanelBackgroundColor="#6000D9"
+             ItemHeaderFontSize="12">
+        <dxn:TabViewItem HeaderText="Clientes" HeaderFontSize="13"
+                         SelectedHeaderBackgroundColor="#6000D9"
+                         SelectedHeaderTextColor="{StaticResource blue600}"
+                         SelectedHeaderIconColor="{StaticResource blue600}">
+            <dxn:TabViewItem.Content>
+                <StackLayout>
+                    <dxg:DataGridView x:Name="grid" ItemsSource="{Binding Clientes}" ShowAutoFilterRow="True">
+                        <dxg:DataGridView.CellStyle>
+                            <dxg:CellStyle Padding="12" BorderColor="#E8E8E8"
+                           FontSize="14" FontColor="#1A1A1A" 
+                           SelectionColor="#E2F0EE" SelectionFontColor="Black"/>
+                        </dxg:DataGridView.CellStyle>
+                        <dxg:DataGridView.ColumnHeaderStyle>
+                            <dxg:ColumnHeaderStyle Padding="15" BackgroundColor="#FAFAFA" BorderColor="#E8E8E8" BottomBorderColor="#E8E8E8"
+                                   FontSize="15" FontColor="#161616" FontAttributes="Bold" 
+                                   HorizontalLineThickness="1.4"/>
+                        </dxg:DataGridView.ColumnHeaderStyle>
+                        <dxg:DataGridView.Columns>
+                            <dxg:TextColumn FieldName="Name" Caption="Nombre" Width="170" AutoFilterCondition="Contains"/>
+                            <dxg:TextColumn FieldName="Ruc" Caption="Ruc" Width="150"/>
+                            <dxg:TextColumn FieldName="Codigo" Caption="Código" Width="90"/>
+                        </dxg:DataGridView.Columns>
+                    </dxg:DataGridView>
+                </StackLayout>
+            </dxn:TabViewItem.Content>
+        </dxn:TabViewItem>
+        <dxn:TabViewItem HeaderText="Facturas" HeaderFontSize="13"
+                         SelectedHeaderBackgroundColor="#6000D9"
+                         SelectedHeaderTextColor="{StaticResource blue600}"
+                         SelectedHeaderIconColor="{StaticResource blue600}">
+            <dxn:TabViewItem.Content>
+                <StackLayout>
+                    <dxg:DataGridView x:Name="grid1" ItemsSource="{Binding Facturas}" ShowAutoFilterRow="True">
+                        <dxg:DataGridView.CellStyle>
+                            <dxg:CellStyle Padding="12" BorderColor="#E8E8E8"
+                               FontSize="14" FontColor="#1A1A1A" 
+                               SelectionColor="#E2F0EE" SelectionFontColor="Black"/>
+                        </dxg:DataGridView.CellStyle>
+                        <dxg:DataGridView.ColumnHeaderStyle>
+                            <dxg:ColumnHeaderStyle Padding="15" BackgroundColor="#FAFAFA" BorderColor="#E8E8E8" BottomBorderColor="#E8E8E8"
+                                       FontSize="15" FontColor="#161616" FontAttributes="Bold" 
+                                       HorizontalLineThickness="1.4"/>
+                        </dxg:DataGridView.ColumnHeaderStyle>
+                        <dxg:DataGridView.Columns>
+                            <dxg:TextColumn FieldName="Id" Caption="Id" Width="90" AutoFilterCondition="Contains"/>
+                            <dxg:TextColumn FieldName="NameEmpresa" Caption="Empresa" Width="120"/>
+                            <dxg:TextColumn FieldName="Name" Caption="Cliente" Width="100"/>
+                            <dxg:TextColumn FieldName="Fecha" Caption="Fecha" Width="100"/>
+                        </dxg:DataGridView.Columns>
+                    </dxg:DataGridView>
+                </StackLayout>
+            </dxn:TabViewItem.Content>
+        </dxn:TabViewItem>
+        <dxn:TabViewItem HeaderText="Grafica" HeaderFontSize="13"
+                         SelectedHeaderBackgroundColor="#6000D9"
+                         SelectedHeaderTextColor="{StaticResource blue600}"
+                         SelectedHeaderIconColor="{StaticResource blue600}">
+            <dxn:TabViewItem.Content>
+                <dxc:PieChartView x:Name="chart" SelectionBehavior="Hatch">
+                    <dxc:PieChartView.ChartStyle>
+                        <dxc:PieChartStyle Palette="{Binding Palette}" 
+                               BorderColor="#747987"/>
+                    </dxc:PieChartView.ChartStyle>
+                    <dxc:PieChartView.Hint>
+                        <dxc:PieHint Enabled="True">
+                            <dxc:PieHint.Style>
+                                <dxc:PieHintStyle BackgroundColor="#424651"/>
+                            </dxc:PieHint.Style>
+                        </dxc:PieHint>
+                    </dxc:PieChartView.Hint>
+                    <dxc:PieChartView.Series>
+                        <dxc:DonutSeries>
+                            <dxc:DonutSeries.HintOptions>
+                                <dxc:PieSeriesHintOptions PointTextPattern="{}{L}: {V} Ventas"/>
+                            </dxc:DonutSeries.HintOptions>
+                            <dxc:DonutSeries.Data>
+                                <dxc:PieSeriesDataAdapter DataSource="{Binding Ventas}"
+                                              LabelDataMember="NameEmpresa"
+                                              ValueDataMember="Cantidad"/>
+                            </dxc:DonutSeries.Data>
+                            <dxc:DonutSeries.Label>
+                                <dxc:PieSeriesLabel Position="TwoColumns" TextPattern="{}{VP}%" Indent="20">
+                                    <dxc:PieSeriesLabel.Style>
+                                        <dxc:PieSeriesLabelStyle ConnectorThickness="3">
+                                            <dxc:PieSeriesLabelStyle.TextStyle>
+                                                <dxc:TextStyle Size="16"/>
+                                            </dxc:PieSeriesLabelStyle.TextStyle>
+                                        </dxc:PieSeriesLabelStyle>
+                                    </dxc:PieSeriesLabel.Style>
+                                </dxc:PieSeriesLabel>
+                            </dxc:DonutSeries.Label>
+                        </dxc:DonutSeries>
+                    </dxc:PieChartView.Series>
+                    <dxc:PieChartView.Legend>
+                        <dxc:Legend Orientation="LeftToRight"
+                        HorizontalPosition="Center"
+                        VerticalPosition="BottomOutside">
+                            <dxc:Legend.Style>
+                                <dxc:LegendStyle
+                             MarkerSize="20" TextIndent="10"
+                             ItemsVerticalIndent="20" Padding="0,0,0,80">
+                                    <dxc:LegendStyle.TextStyle>
+                                        <dxc:TextStyle Size="16"/>
+                                    </dxc:LegendStyle.TextStyle>
+                                </dxc:LegendStyle>
+                            </dxc:Legend.Style>
+                        </dxc:Legend>
+                    </dxc:PieChartView.Legend>
+                </dxc:PieChartView>
+            </dxn:TabViewItem.Content>
+        </dxn:TabViewItem>
+        <dxn:TabViewItem HeaderText="Barras" HeaderFontSize="13"
+                         SelectedHeaderBackgroundColor="#6000D9"
+                         SelectedHeaderTextColor="{StaticResource blue600}"
+                         SelectedHeaderIconColor="{StaticResource blue600}">
+            <dxn:TabViewItem.Content>
+                <dxc:ChartView>
+                    <dxc:ChartView.Series>
+                        <dxc:BarSeries PointColorizer="{local:CustomColorizer}">
+                            <dxc:BarSeries.Data>
+                                <dxc:SeriesDataAdapter DataSource="{Binding Ventas}" 
+                                           ArgumentDataMember="NameEmpresa">
+                                    <dxc:ValueDataMember Member="Cantidad" Type="Value" />
+                                </dxc:SeriesDataAdapter>
+                            </dxc:BarSeries.Data>
+                        </dxc:BarSeries>
+                    </dxc:ChartView.Series>
+                </dxc:ChartView>
+            </dxn:TabViewItem.Content>
+        </dxn:TabViewItem>
+    </dxn:TabView>
+</ContentPage>
+    
